@@ -52,7 +52,9 @@ class _BuildBottomNavState extends State<BuildBottomNav> {
           backgroundColor: Colors.green.shade900,
           mainAxisAlignment: MainAxisAlignment.spaceAround,
           borderRadius: BorderRadius.circular(20),
-         shadowColor: Colors.black12,
+          shadowColor: Colors.black12,
+          //showInactiveTitle: true,
+          itemCornerRadius: 15,
 
           selectedIndex: _currentIndex,
           onItemSelected: (index) {
@@ -61,25 +63,22 @@ class _BuildBottomNavState extends State<BuildBottomNav> {
           },
           items: [
             BottomNavyBarItem(
-              title: Text('Home'),
-              icon: Icon(Icons.home),
+              title: const Text('Home'),
+              icon: const Icon(Icons.home),
               activeColor: Colors.white,
-              textAlign: TextAlign.center
 
             ),
 
             BottomNavyBarItem(
-              title: Text('Attendance'),
-              icon: Icon(Icons.calendar_today),
+              title: const Text('Attendance'),
+              icon: const Icon(Icons.calendar_month),
               activeColor: Colors.white,
-                textAlign: TextAlign.center
             ),
 
             BottomNavyBarItem(
-              title: Text('Profile'),
-              icon: Icon(Icons.person),
+              title: const Text('Profile'),
+              icon: const Icon(Icons.person),
               activeColor: Colors.white,
-                textAlign: TextAlign.center
             ),
           ],
         ),

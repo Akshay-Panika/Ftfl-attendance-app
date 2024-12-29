@@ -10,6 +10,6 @@ class SplashGetXController extends GetxController{
 
   void _navigateToHome()async{
     await Future.delayed(const Duration(seconds: 3));
-    Get.offNamed('/bottomNav');
+    Get.offNamed('/loginScreen');
   }
 }

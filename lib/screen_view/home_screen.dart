@@ -1,10 +1,10 @@
 import 'dart:async';
-
 import 'package:flutter/material.dart';
 import 'package:ftfl_attendance_app/custom_widget/custom_hw.dart';
 import 'package:ftfl_attendance_app/custom_widget/custom_textstyle.dart';
-import 'package:ftfl_attendance_app/screen_view/qr_screen.dart';
-import 'package:intl/intl.dart'; // Add this for date formatting
+import 'package:intl/intl.dart';
+
+import 'location_get.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -18,13 +18,13 @@ class _HomeScreenState extends State<HomeScreen> {
   late String currentTimeWithSecond;
   late String currentDateMonthYear;
   late String currentDay;
-
   late Timer _timer;
+
   @override
   void initState() {
     super.initState();
     _updateDateTime();
-    _timer = Timer.periodic(Duration(seconds: 1), (timer) {
+    _timer = Timer.periodic(const Duration(seconds: 1), (timer) {
       setState(() {
         _updateDateTime();
       });
@@ -36,7 +36,6 @@ class _HomeScreenState extends State<HomeScreen> {
     _timer.cancel();
     super.dispose();
   }
-
 
   void _updateDateTime() {
     final now = DateTime.now();
@@ -57,8 +56,8 @@ class _HomeScreenState extends State<HomeScreen> {
           /// App bar
           _buildAppBar(),
 
-
           100.height,
+
           /// Date and Time Display
           _buildDateTimeDisplay(
             currentTime: currentTime,
@@ -66,33 +65,29 @@ class _HomeScreenState extends State<HomeScreen> {
             currentDay: currentDay,
           ),
 
-
           50.height,
-          /// Check In Out
-          _checkInOut(),
 
+          /// Check In/Out
+          _checkInOut(),
 
           100.height,
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
               _futureButton(
-                  title: '9:30',
-                  subtitle: 'Check In'
+                title: '9:30',
+                subtitle: 'Check In',
               ),
-
               _futureButton(
-                  title: '---:---',
-                  subtitle: 'Check Out'
+                title: '---:---',
+                subtitle: 'Check Out',
               ),
-
               _futureButton(
-                  title: '0.00',
-                  subtitle: 'Total Hrs'
+                title: '0.00',
+                subtitle: 'Total Hrs',
               ),
             ],
           )
-
         ],
       ),
     );
@@ -127,32 +122,33 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
-
-  Widget _buildDateTimeDisplay({required String currentTime, required String currentDateMonthYear, required String currentDay}){
-    return  Column(
+  Widget _buildDateTimeDisplay({
+    required String currentTime,
+    required String currentDateMonthYear,
+    required String currentDay,
+  }) {
+    return Column(
       crossAxisAlignment: CrossAxisAlignment.center,
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        Text(currentTime, style: textStyle22(fontWeight: FontWeight.w600),),
-        Row(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Text(currentDateMonthYear, style: textStyle14(fontWeight: FontWeight.w600, color: Colors.grey),),
-            10.width,
-            Text(currentDay, style: textStyle14(fontWeight: FontWeight.w600, color: Colors.grey),),
-          ],
+        Text(
+          currentTime,
+          style: const TextStyle(fontSize: 30),
+        ),
+        Text(
+          '$currentDateMonthYear, $currentDay',
+          style: textStyle14(fontWeight: FontWeight.w600, color: Colors.grey),
         ),
       ],
     );
   }
 
   Widget _checkInOut() {
-    return GestureDetector(
+    return InkWell(
       onTap: () {
-        Navigator.push(
-          context,
-          MaterialPageRoute(builder: (context) => QRScannerScreen()),
+        showModalBottomSheet(
+          context: context,
+          builder: (context) => const PickLocationScreen(),
         );
       },
       child: Container(
@@ -176,31 +172,52 @@ class _HomeScreenState extends State<HomeScreen> {
               ),
             ],
           ),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              const Icon(Icons.qr_code_scanner, size: 80, color: Colors.green),
-              // Text(
-              //   "Check In",
-              //   style: textStyle16(fontWeight: FontWeight.w600, color: Colors.green),
-              // ),
-            ],
-          ),
+          child: const Icon(Icons.touch_app, size: 75, color: Colors.green),
         ),
       ),
     );
   }
 
-
-  Widget _futureButton({String? title, String? subtitle}){
+  Widget _futureButton({String? title, String? subtitle}) {
     return Column(
       children: [
-        Icon(Icons.access_time, color: Colors.green.shade300, size: 50,),
-        Text(title!, style: textStyle14(color: Colors.green, fontWeight: FontWeight.w700),),
-        Text(subtitle!, style: textStyle12(color: Colors.grey, fontWeight: FontWeight.w600)),
+        Icon(
+          Icons.access_time,
+          color: Colors.green.shade300,
+          size: 50,
+        ),
+        Text(
+          title ?? '',
+          style: textStyle14(color: Colors.green, fontWeight: FontWeight.w700),
+        ),
+        Text(
+          subtitle ?? '',
+          style: textStyle12(color: Colors.grey, fontWeight: FontWeight.w600),
+        ),
       ],
     );
   }
 
 }
+
+
+
+    // Container(
+    //           height: 50,
+    //             decoration: customDecoration(
+    //               color: Colors.black12,
+    //               borderRadius: 20
+    //             ),
+    //             child: InkWell(
+    //               onTap: _getLocation,
+    //               child: Row(
+    //                 mainAxisAlignment: MainAxisAlignment.center,
+    //                 children: [
+    //                   isLoading
+    //                       ? SizedBox(height: 30,width: 30,child: CircularProgressIndicator(color: Colors.green,))
+    //                       : const Icon(Icons.my_location, color: Colors.green,size: 30,),
+    //                   10.width,
+    //                   Text(isLoading ? "Fetching Location..." : "Get Location", style: textStyle16(fontWeight: FontWeight.w600),),
+    //                 ],
+    //               ),
+    //             ))

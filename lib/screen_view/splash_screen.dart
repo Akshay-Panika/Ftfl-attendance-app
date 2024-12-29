@@ -19,8 +19,8 @@ class SplashScreen extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.center,
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            const Icon(Icons.location_on_outlined, size: 50,),
-            Text("AM HERE", style: textStyle16(fontWeight: FontWeight.bold),),
+            const Icon(Icons.location_on_outlined, size: 80, color: Colors.green,),
+            Text("AM HERE", style: textStyle16(fontWeight: FontWeight.bold, color: Colors.black),),
           ],
         ),
       ),

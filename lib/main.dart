@@ -3,6 +3,8 @@ import 'package:ftfl_attendance_app/screen_view/build_bottom_nav.dart';
 import 'package:ftfl_attendance_app/screen_view/splash_screen.dart';
 import 'package:get/get.dart';
 
+import 'auth_view/login_screen.dart';
+
 
 
 void main()async{
@@ -20,6 +22,7 @@ class MyApp extends StatelessWidget {
       initialRoute: '/splash',
       getPages: [
         GetPage(name: '/splash', page: () =>  SplashScreen(),),
+        GetPage(name: '/loginScreen', page: () =>  LoginScreen(),),
         GetPage(name: '/bottomNav', page: () =>  BuildBottomNav(),),
       ],
     );
